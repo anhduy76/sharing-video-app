@@ -3,12 +3,15 @@ import {Typography,Button, TextField} from '@mui/material'
 import { AuthContext } from '../context/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import { graphQLRequest } from '../utils/request';
+import Alert from './Alert';
 
 export default function Login() {
   const {user, setUser} = useContext(AuthContext)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showAlert, setShowAlert] =  useState(false);
+  const [message, setMessage] = useState('');
   const handleSignUp = () => {
     navigate('/signUp')
   }
@@ -39,6 +42,13 @@ export default function Login() {
         }
       },
     });
+    console.log(res)
+    if(res.isError) {
+      setMessage(`${res.message} !`)
+      setShowAlert(true)
+
+      return;
+    }
     if (!res ||!res.signIn) {
       return null;
     }
@@ -69,6 +79,12 @@ export default function Login() {
       <TextField  id="outlined-password-input" label="Password"
           type="password" fullWidth placeholder='Fill in password'
           value={password} onChange={onChangePassword}></TextField>
+           {showAlert && (
+          <Alert
+            message={message}
+            type="success"
+          />
+        )}
       <Button variant="contained" size="medium" onClick={handleLogIn} >Login</Button>
       <div style={{display:'flex', alignItems: 'center', gap:'12px'}}>
       <Typography >Don't have an account?</Typography>

@@ -15,6 +15,8 @@ import { AuthContext } from "../context/AuthProvider";
 import YouTubeEmbed from "./YoutubeEmbed";
 import { getEmbedId, getVideoTitle } from "../utils/getEmbedId";
 import { graphQLRequest } from "../utils/request";
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import {GRAPHQL_SUBSCRIPTION_ENDPOINT} from '../utils/constants'
 
 export default function Home() {
   const { user, setUser } = useContext(AuthContext);
@@ -23,6 +25,7 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
+  const [noti, setNoti] = useState([])
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
@@ -36,6 +39,35 @@ export default function Home() {
   const handleClose = () => {
     setOpen(false);
   };
+  const onVote = () => {
+    console.log('vaoday')
+  }
+  // Subscription noti
+  useEffect(() => {
+    const client = new SubscriptionClient(`${GRAPHQL_SUBSCRIPTION_ENDPOINT}/graphql`, {
+      reconnect: true, // Enable auto-reconnect
+    });
+
+    const subscription = client.request({
+      query: `
+      subscription notifyRealTime {
+        notification_reads_aggregate{aggregate{count}}
+      }
+      `,
+    }).subscribe({
+      next: (data) => {
+        console.log(data)
+      },
+      error: (error) => {
+        console.error('Subscription error:', error);
+      },
+    });
+
+    return () => {
+      subscription.unsubscribe(); // Cleanup subscription on component unmount
+      client.close(); // Close the WebSocket connection
+    };
+  }, [])
   useEffect(() => {
     setUserName(user.userName)
   }, [user])
@@ -150,7 +182,9 @@ export default function Home() {
             <p>Shared by: {item.sharedUser?.fullName}</p>
             <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
               <p>{item.voted?.aggregate?.count}</p>
+              <Button style={{padding: '0',margin: '0'}} onClick={onVote(item.id)}>
               <ThumbUpAltIcon />
+              </Button>
               <p>{item.un_voted?.aggregate?.count}</p>
               <ThumbDownAltIcon />
             </div>
