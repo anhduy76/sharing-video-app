@@ -145,16 +145,17 @@ export default function Home() {
     <>
       <AppBar position="static" style={{ backgroundColor: "#767676" }}>
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "20px 40px",
-          }}
+          // style={{
+          //   display: "flex",
+          //   alignItems: "center",
+          //   justifyContent: "space-between",
+          //   padding: "20px 40px",
+          // }}
+          className="nav-bar-container"
         >
           <Typography>Funny Movie</Typography>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <Typography>Welcome {userName}</Typography>
+            <Typography className="welcome-name">Welcome {userName}</Typography>
             <Button variant="contained" size="small" onClick={handleShare}>
               Share a movie
             </Button>
@@ -169,6 +170,7 @@ export default function Home() {
         <div
           style={{ padding: "10px 20px", display: "flex", gap: "24px" ,
         borderBottom: '1px solid #767676'}}
+        className="video-list"
           key={index}
         >
           <YouTubeEmbed embedId={getEmbedId(item.url)} />

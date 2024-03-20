@@ -18,3 +18,34 @@
   flex-direction: column;
   gap: 36px;
 }
+.nav-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+@media (max-width: 480px) {
+  .layout {
+    padding: 10px 20px
+  }
+  .login-container {
+    padding:0px
+  }
+  .nav-bar-container {
+    padding: 10px 20px
+  }
+  .welcome-name {
+    display: none;
+  }
+  .video-list {
+    flex-direction: column;
+  }
+  .video-web {
+    display: none;
+  }
+}
+@media (min-width: 480px) {
+  .video-mobile {
+    display: none;
+  }
+}

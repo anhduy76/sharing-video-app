@@ -2,14 +2,14 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { split, ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
-import DebounceLink from 'apollo-link-debounce';
+// import DebounceLink from 'apollo-link-debounce';
 import { HttpLink } from 'apollo-link-http';
 // import { RetryLink } from 'apollo-link-retry';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import {GRAPHQL_SERVER, GRAPHQL_SUBSCRIPTION_ENDPOINT} from '../utils/constants'
 
-const DEFAULT_DEBOUNCE_TIMEOUT = 314;
+// const DEFAULT_DEBOUNCE_TIMEOUT = 314;
 export interface IAuthenticator {
   getIdToken(): Promise<string>;
 }
@@ -21,32 +21,6 @@ export interface IGraphQLClientOptions {
 }
 
 
-function getOsversion() {
-  if (navigator.platform) {
-    return navigator.platform;
-  }
-
-  return '';
-}
-function getModel() {
-  const ua= navigator.userAgent;
-  let tem,
-    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-  if (/trident/i.test(M[1])) {
-    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-
-    return 'IE ' + (tem[1] || '');
-  }
-  if (M[1] === 'Chrome') {
-    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-    if (tem !== null) { return tem.slice(1).join(' ').replace('OPR', 'Opera'); }
-  }
-  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-  // tslint:disable-next-line:no-conditional-assignment
-  if ((tem = ua.match(/version\/(\d+)/i)) !== null) { M.splice(1, 1, tem[1]); }
-
-  return M.join(' ');
-}
 function GraphQLClient(
   options: IGraphQLClientOptions
 ): ApolloClient<any> {
