@@ -6,6 +6,7 @@ export const graphQLRequest = async (payload, options = {}) => {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      'Access-Control-Allow-Origin': '*',
       Platform: "portal",
       Authorization:
         options && options.accessToken
