@@ -1,2 +1,2 @@
-export const GRAPHQL_SERVER = 'http://34.142.221.69/v1';
-export const GRAPHQL_SUBSCRIPTION_ENDPOINT = 'ws://34.142.221.69/v1';
+export const GRAPHQL_SERVER = 'https://demo.tranvannhut.com/v1';
+export const GRAPHQL_SUBSCRIPTION_ENDPOINT = 'wss://demo.tranvannhut.com/v1';
