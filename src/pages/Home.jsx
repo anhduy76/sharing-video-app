@@ -16,7 +16,9 @@ import YouTubeEmbed from "./YoutubeEmbed";
 import { getEmbedId, getVideoTitle } from "../utils/getEmbedId";
 import { graphQLRequest } from "../utils/request";
 import { SubscriptionClient } from 'subscriptions-transport-ws';
-import {GRAPHQL_SUBSCRIPTION_ENDPOINT} from '../utils/constants'
+import {GRAPHQL_SUBSCRIPTION_ENDPOINT} from '../utils/constants';
+import Noti from "./Noti";
+
 
 export default function Home() {
   const { user, setUser } = useContext(AuthContext);
@@ -27,6 +29,7 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [noti, setNoti] = useState([])
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     localStorage.clear();
     setUser({});
@@ -161,6 +164,7 @@ export default function Home() {
           </div>
         </div>
       </AppBar>
+      {/* <Noti /> */}
       {data.map((item, index) => (
         <div
           style={{ padding: "10px 20px", display: "flex", gap: "24px" ,
